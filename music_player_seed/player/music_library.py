@@ -14,6 +14,9 @@ class MusicLibrary:
         self.music_list.remove(self.music_list[id])
         return True
 
+    def search(self, func):
+        return list(filter(func, self.music_list))
+
 class Track():
     def __init__(self, title, artist, file_name):
         self.title = title

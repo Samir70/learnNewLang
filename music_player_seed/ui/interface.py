@@ -51,7 +51,7 @@ class Interface:
     def _list_tracks(self, tracks):
         for idx, track in enumerate(tracks):
             self.console.print(
-                f"{idx + 1}. {track.title} by {track.artist} @ {track.file}"
+                f"{idx + 1}. {track}"
             )
 
     def _search_tracks(self):
@@ -100,7 +100,8 @@ class Interface:
         tracks = self.music_library.all()
         if track_id >= 0 and track_id < len(tracks):
             track = tracks[track_id]
-            self.console.print(f"Playing {track.title} by {track.artist}...")
+            t_str = f"{track}".split(" @")[0]
+            self.console.print(f"Playing {t_str}...")
             self.music_player.play(track.file)
             self.console.print("Done.")
         else:

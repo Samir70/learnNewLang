@@ -25,3 +25,6 @@ class Track():
         self.title = title
         self.artist = artist
         self.file = file_name
+
+    def __str__(self) -> str:
+        return f"{self.title} by {self.artist} @ {self.file}"

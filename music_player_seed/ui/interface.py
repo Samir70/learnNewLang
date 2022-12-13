@@ -62,29 +62,37 @@ class Interface:
         self.console.print("  *: anything")
         choice = self.console.input("What do you want to search by? ")
         search_term = self.console.input("What do you want to search for? ").lower()
-        if choice == "t":
-            # DONE: Find tracks by title
-            found = self.music_library.search(
-                lambda track: search_term in track.title.lower())
-            self._list_tracks(found)
-        elif choice == "a":
-            # DONE: Find tracks by artist
-            found = self.music_library.search(
-                lambda track: search_term in track.artist.lower())
-            self._list_tracks(found)
-        elif choice == "f":
-            # DONE: Find tracks by file
-            found = self.music_library.search(
-                lambda track: search_term in track.file.lower())
-            self._list_tracks(found)
-        elif choice == "*":
-            # DONE: Find tracks by any field
-            found = self.music_library.search(
-                lambda track: search_term in track.title.lower() or search_term in track.artist.lower() or search_term in track.file.lower()
-            )
-            self._list_tracks(found)
-        else:
-            self.console.print("No such field!")
+        attribute_name = {
+            "t": "title",
+            "a": "artist",
+            "f": "file",
+            "*": "all"
+        }[choice]
+        found = self.music_library.search(attribute_name, search_term)
+        self._list_tracks(found)
+        # if choice == "t":
+        #     # DONE: Find tracks by title
+        #     found = self.music_library.search(
+        #         lambda track: search_term in track.title.lower())
+        #     self._list_tracks(found)
+        # elif choice == "a":
+        #     # DONE: Find tracks by artist
+        #     found = self.music_library.search(
+        #         lambda track: search_term in track.artist.lower())
+        #     self._list_tracks(found)
+        # elif choice == "f":
+        #     # DONE: Find tracks by file
+        #     found = self.music_library.search(
+        #         lambda track: search_term in track.file.lower())
+        #     self._list_tracks(found)
+        # elif choice == "*":
+        #     # DONE: Find tracks by any field
+        #     found = self.music_library.search(
+        #         lambda track: search_term in track.title.lower() or search_term in track.artist.lower() or search_term in track.file.lower()
+        #     )
+        #     self._list_tracks(found)
+        # else:
+        #     self.console.print("No such field!")
 
     def _play_track(self):
         self._list_tracks(self.music_library.all())

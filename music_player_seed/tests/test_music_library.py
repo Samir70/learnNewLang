@@ -57,7 +57,8 @@ class TestMusicLibrary(unittest.TestCase):
         ml.add(t1)
         ml.add(t2)
         ml.add(t3)
-        results = ml.search(lambda track: "son" in track.title.lower())
+        results = ml.search("title", "son")
+        # results = ml.search(lambda track: "son" in track.title.lower())
         self.assertEqual(results, [t1, t2, t3])
 
     def test_searches_titles_for_string2(self):
@@ -68,7 +69,8 @@ class TestMusicLibrary(unittest.TestCase):
         ml.add(t1)
         ml.add(t2)
         ml.add(t3)
-        results = ml.search(lambda track: "a s" in track.title.lower())
+        results = ml.search("title", "a s")
+        # results = ml.search(lambda track: "a s" in track.title.lower())
         self.assertEqual(results, [t1, t2])
 
     def test_searches_artists_for_string(self):
@@ -79,7 +81,8 @@ class TestMusicLibrary(unittest.TestCase):
         ml.add(t1)
         ml.add(t2)
         ml.add(t3)
-        results = ml.search(lambda track: "er" in track.artist.lower())
+        results = ml.search("artist", "er")
+        # results = ml.search(lambda track: "er" in track.artist.lower())
         self.assertEqual(results, [t1, t3])
 
     def test_searches_filenames_for_string(self):
@@ -90,5 +93,6 @@ class TestMusicLibrary(unittest.TestCase):
         ml.add(t1)
         ml.add(t2)
         ml.add(t3)
-        results = ml.search(lambda track: "mp3" in track.file.lower())
+        results = ml.search("all", "mp3")
+        # results = ml.search(lambda track: "mp3" in track.file.lower())
         self.assertEqual(results, [t2, t3])

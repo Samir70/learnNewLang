@@ -15,7 +15,8 @@ class MusicLibrary:
         return True
 
     def search(self, func):
-        return list(filter(func, self.music_list))
+        # return list(filter(func, self.music_list))
+        return [track for track in self.music_list if func(track)]
 
 class Track():
     def __init__(self, title, artist, file_name):

@@ -70,6 +70,7 @@ class Interface:
         }[choice]
         found = self.music_library.search(attribute_name, search_term)
         self._list_tracks(found)
+        return found
         # if choice == "t":
         #     # DONE: Find tracks by title
         #     found = self.music_library.search(
@@ -95,9 +96,9 @@ class Interface:
         #     self.console.print("No such field!")
 
     def _play_track(self):
-        self._list_tracks(self.music_library.all())
+        tracks = self._search_tracks()
+        # tracks = self.music_library.all()
         track_id = int(self.console.input("Which do you want to play? ")) - 1
-        tracks = self.music_library.all()
         if track_id >= 0 and track_id < len(tracks):
             track = tracks[track_id]
             t_str = f"{track}".split(" @")[0]

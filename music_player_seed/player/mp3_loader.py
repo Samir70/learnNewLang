@@ -17,11 +17,8 @@ class Mp3Loader:
             return
         for f in self.file_names:
             audio = self.tag_reader.load(self.file_sys.join(full_path, f))
-            # print(audio["tag"])#.tag.title)
             self.file_data.append({
                 "title": audio.tag.title,
                 "artist": audio.tag.artist,
-                # needed to use "artist": audio["tag"]["artist"],
-                # to pass the tests, otherwise I couldn't get the data out of the mock object
                 "file": self.file_sys.join(self.path, f)
             })

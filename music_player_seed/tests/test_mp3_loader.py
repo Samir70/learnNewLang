@@ -33,17 +33,17 @@ class TestMp3Loader(unittest.TestCase):
         file_sys.is_file.side_effect = [True, True, False]
         file_sys.join.side_effect = [
             "used in __init__/",
-            "should be from getcwd/",
+            "used on line 10/",
+            "line 14-15 list comprehension for files that end in .mp3",
+            "line 14-15 list comprehension for files that end in .mp3",
+            "line 14-15 list comprehension for files that end in .mp3",
             "to access first file/",
             "dummy/path/file1.mp3",
             "to access second file/",
             "dummy/path/file2.mp3"
         ]
         fake_eyed3 = Mock()
-        fake_eyed3.load.side_effect = [
-            {"tag": {"title": "title1", "artist": "artist1"}},
-            {"tag": {"title": "title2", "artist": "artist2"}},
-        ]
+        fake_eyed3.load.side_effect = [FakeAudio("title1", "artist1"), FakeAudio("title2", "artist2")]
         mLoad = Mp3Loader(["dummy", "path"], fake_eyed3, file_sys)
         mLoad.get_files()
         fake_eyed3.load.assert_called
@@ -51,3 +51,11 @@ class TestMp3Loader(unittest.TestCase):
             {"title": "title1", "artist": "artist1", "file": "dummy/path/file1.mp3"},
             {"title": "title2", "artist": "artist2", "file": "dummy/path/file2.mp3"}
         ])
+
+class EmptyObject(object):
+    pass
+class FakeAudio:
+    def __init__(self, title, artist) -> None:
+        self.tag = EmptyObject()
+        self.tag.artist = artist
+        self.tag.title = title

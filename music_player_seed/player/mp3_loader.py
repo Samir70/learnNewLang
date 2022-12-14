@@ -8,16 +8,20 @@ class Mp3Loader:
 
     def get_files(self):
         full_path = self.file_sys.join(self.file_sys.getcwd(), self.path)
+        # print("getting files from: ", full_path)
         # for f in self.file_sys.listdir(full_path):
-        #     print("file?", f, self.file_sys.is_file(f))
-        self.file_names = [f for f in self.file_sys.listdir(full_path) if (f.endswith(".mp3") and self.file_sys.is_file(f))]
+        #     print("file?", f, self.file_sys.is_file(self.file_sys.join(full_path, f)))
+        self.file_names = [f for f in self.file_sys.listdir(full_path) if (
+            f.endswith(".mp3") and self.file_sys.is_file(self.file_sys.join(full_path, f)))]
         if self.tag_reader == None:
             return
         for f in self.file_names:
             audio = self.tag_reader.load(self.file_sys.join(full_path, f))
             # print(audio["tag"])#.tag.title)
             self.file_data.append({
-                "title": audio["tag"]["title"], 
-                "artist": audio["tag"]["artist"],
+                "title": audio.tag.title,
+                "artist": audio.tag.artist,
+                # needed to use "artist": audio["tag"]["artist"],
+                # to pass the tests, otherwise I couldn't get the data out of the mock object
                 "file": self.file_sys.join(self.path, f)
             })

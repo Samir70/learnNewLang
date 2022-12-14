@@ -4,16 +4,27 @@
 
 from player.music_library import MusicLibrary, Track
 from player.music_player import MusicPlayer
-
+from player.mp3_loader import Mp3Loader
 
 class Interface:
-    def __init__(self, console, subprocess):
+    def __init__(self, console, subprocess, file_sys, tag_reader):
         self.console = console
         self.music_library = MusicLibrary()
         self.music_player = MusicPlayer(subprocess)
+        self.mp3_loader = Mp3Loader(["data", "mp3s"], tag_reader, file_sys)
 
     def run(self):
         self.console.print("Welcome to your music library!")
+        self.mp3_loader.get_files()
+        for track in self.mp3_loader.file_data:
+            # self.console.print("Found a track:")
+            # self.console.print(track["title"])
+            # self.console.print(track["artist"])
+            # self.console.print(track["file"])
+            # self.console.print("")
+            self.music_library.add(Track(track["title"], track["artist"], track["file"]))
+        self.console.print(f"added {len(self.mp3_loader.file_data)} tracks")
+
         while True:
             choice = self._prompt()
             if choice == "a":

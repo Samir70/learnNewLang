@@ -15,9 +15,9 @@ class TestMp3Loader(unittest.TestCase):
         file_sys = Mock()
         file_sys.getcwd = MagicMock(return_value="/Users/project/mLib")
         file_sys.join = MagicMock(return_value="/Users/project/mLib/dummy/path")
-        file_sys.is_file.side_effect = [True, False, True, True]
+        file_sys.is_file.side_effect = [True, True, False]
         file_sys.listdir = MagicMock(
-            return_value=["file1.mp3", "subdir/", "file2.mp3", "file3.txt"])
+            return_value=["file1.mp3", "subdir/", "file2.mp3", ".mp3"])
         mLoad = Mp3Loader(["dummy", "path"], None, file_sys)
         mLoad.get_files()
         file_sys.getcwd.assert_called
@@ -29,8 +29,8 @@ class TestMp3Loader(unittest.TestCase):
     def test_gets_file_data(self):
         file_sys = Mock()
         file_sys.listdir = MagicMock(
-            return_value=["file1.mp3", "subdir/", "file2.mp3", "file3.txt"])
-        file_sys.is_file.side_effect = [True, False, True, True]
+            return_value=["file1.mp3", "subdir/", "file2.mp3", ".mp3"])
+        file_sys.is_file.side_effect = [True, True, False]
         file_sys.join.side_effect = [
             "used in __init__/",
             "should be from getcwd/",

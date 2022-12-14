@@ -8,7 +8,9 @@ class Mp3Loader:
 
     def get_files(self):
         full_path = self.file_sys.join(self.file_sys.getcwd(), self.path)
-        self.file_names = [f for f in self.file_sys.listdir(full_path) if f.endswith(".mp3")]
+        # for f in self.file_sys.listdir(full_path):
+        #     print("file?", f, self.file_sys.is_file(f))
+        self.file_names = [f for f in self.file_sys.listdir(full_path) if (f.endswith(".mp3") and self.file_sys.is_file(f))]
         if self.tag_reader == None:
             return
         for f in self.file_names:

@@ -60,6 +60,3 @@ btn_increase.grid(row=0, column=2, sticky="nsew")
 counter.pack()
 
 window.mainloop()
-
-window.mainloop()
-

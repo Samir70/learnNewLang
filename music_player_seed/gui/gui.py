@@ -25,11 +25,21 @@ class GUI:
         print("in the show gui method")
         window = tk.Tk()
         headings = tk.Frame()
-        headings.rowconfigure(0, minsize=50, weight=1)
-        headings.columnconfigure([0, 1, 2], minsize=50, weight=1)
-        lbl_artists = tk.Label(window, text="Artists")
-        lbl_artists.grid(row=0, column=1)
         headings.pack()
+        headings.rowconfigure(0, minsize=50, weight=1)
+        headings.columnconfigure(0, minsize=50, weight=1)
+        headings.columnconfigure(1, minsize=150, weight=3)
+        lbl_artist = tk.Label(headings, text="Artists")
+        lbl_artist.grid(row=0, column=0)
+        lbl_title = tk.Label(headings, text="Track title")
+        lbl_title.grid(row=0, column=1)
+
+        tracks = self.music_library.all()
+        artists = sorted([" All", *list(set([t.artist for t in tracks]))])
+        r = 1
+        for artist in artists:
+            tk.Label(headings, text=f"{artist}").grid(row=r, column=0)
+            r += 1
         window.mainloop()
 
 
